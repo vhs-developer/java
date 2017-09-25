@@ -9,11 +9,11 @@ package Paul;
  *
  * @author kubuntu
  */
-public class Calender {
+public class Calendar {
     /**
      * daysPerMonth ist eine Klassenvariable (static)
      */
-    public static int[] daysPerMonth = new int[-1, 31, 28, 31, 30, 31, 31, 30, 31, 30, 31];
+    public static int[] daysPerMonth = new int [] {-1, 31, 28, 31, 30, 31, 31, 30, 31, 30, 31};
     
     private int year;
     private int month;
@@ -25,7 +25,7 @@ public class Calender {
      * @return 
      */
     public static boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year != 0 || year % 400 == 0);
+        return (year % 4 == 0 && year % 100 != 0 || year % 400 == 0);
     }
     
     
@@ -36,16 +36,12 @@ public class Calender {
      * @param month
      * @param day 
      */
-    public Calender(int year, int month, int day) {
+    public Calendar(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
     
-    public static void main(String[] args) {
-        Calendar calendar = new Calendar(2017,9,25);
-    }
-
     public int getYear() {
         return year;
     }
@@ -74,29 +70,37 @@ public class Calender {
      * Die Methode wechselt zum nächsten Tag
      */
     public void nextDay () {
-        int days = Calender.daysPerMonth[this.month];  //expliz. Scheibweise
+        int days = Calendar.daysPerMonth[this.month];  //expliz. Scheibweise
         // days = dasePerMonth[month]; // dazu semantisch äquivalent impl. Schreibweise
-        days++;
-        if day > daysPerMonth[month] {
+        if (this.month == 2 && Calendar.isLeapYear(this.year)) {
+            days++;
+        }
+        
+        day++;
+        if (day > days) {
             day =1;
-            if (isLeapYear(year) {
-                month;
-            }
             month++;
+            }   
             if (month > 12) {
                 month=1;
                 year++;
             }
-        }
     }
 
+    @Override
+    public String toString() {
+        return "Calendar{" + "year=" + year + ", month=" + month + ", day=" + day + '}';
+    }
+
+    
+    
     public static void main(String[] args) {
         Calendar calendar = new Calendar(2017, 9 , 30);
         calendar.nextDay();
-        System.out.println("calender");
+        System.out.println(calendar); 
     }
     
-    
+
 }
 
 
