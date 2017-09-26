@@ -1,4 +1,4 @@
-package daniel;
+package daniel.kennenlernen;
 
 import java.util.ArrayList;
 import java.util.Date;
