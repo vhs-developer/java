@@ -10,6 +10,11 @@ public class CalendarClock implements Clock, Calendar {
         clock = new MyClock(hour, minute, second);
     }
 
+    public CalendarClock(Calendar calendar, Clock clock) {
+        this.calendar = calendar;
+        this.clock = clock;
+    }
+
     public void tick() {
         clock.tick();
         if (clock.getHour() == 0 && clock.getMinute() == 0 && clock.getSecond() == 0) {
@@ -27,7 +32,8 @@ public class CalendarClock implements Clock, Calendar {
     }
     
     public static void main(String[] args) {
-        CalendarClock cc = new CalendarClock(2017, 9, 25, 23, 59, 59);
+        CalendarClock cc = new CalendarClock(new MyCalendar(2017, 9, 25), new MyClock(23, 59, 59)); // Die konkrete Implementierung von Calendar und Clock ist austauschbar, da wir mit Interfaces arbeiten.
+        // cc = new CalendarClock(2017, 9, 25, 23, 59, 59);
         cc.tick();
         System.out.println(cc);
         cc.nextDay();
