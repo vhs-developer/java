@@ -4,6 +4,16 @@ public class CalendarClock {
     // Composition:
     private Clock clock;
     private Calendar calendar;
+
+    public Clock getClock() {
+        return clock;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+    
+    
     
     public CalendarClock(int year, int month, int day, int hour, int minute, int second) {
         calendar = new Calendar(year, month, day);
