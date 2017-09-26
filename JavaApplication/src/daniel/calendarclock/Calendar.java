@@ -1,4 +1,4 @@
-package daniel;
+package daniel.calendarclock;
 
 import java.util.logging.Logger;
 
