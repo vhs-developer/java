@@ -1,4 +1,4 @@
-package ralf;
+package ralf.kennenlernen;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +87,6 @@ public class P01Kennenlernen {
         person.partei = "1";
         personen.add(person);
      
-        System.out.println("Personen-");
     }
     
 }
