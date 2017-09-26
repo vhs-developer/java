@@ -1,4 +1,4 @@
-package daniel;
+package daniel.calendarclock;
 
 public class CalendarClock {
     // Composition:

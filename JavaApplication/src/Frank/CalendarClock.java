@@ -1,7 +1,5 @@
 package Frank;
 
-import daniel.*;
-
 public class CalendarClock {
     // Composition:
     private Clock clock;
