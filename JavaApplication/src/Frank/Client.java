@@ -5,35 +5,9 @@
  */
 package Frank;
 
-/**
- *
- * @author kubuntu
- */
 class Cache {
  
-/*    
-public class Type1 {
-public static void main(String[] args) {
-String s = null;
-System.out.println(s instanceof String);
-}
-}
-
-    class Type2 {
-
-        public static void main(String[] args) {
-            System.out.println(new Type2() instanceof String);
-        }
-    }
-    class Type3 {
-
-        public static void main(String args[]) {
-            Type3 t3 = (Type3) new Object();
-        }
-    }
-*/
-    
-        static {
+     static {
             initializeIfNecessary();
         }
         private static int sum;
@@ -59,4 +33,4 @@ System.out.println(s instanceof String);
         public static void main(String[] args) {
             System.out.println(Cache.getSum());
         }
-    }
+    
