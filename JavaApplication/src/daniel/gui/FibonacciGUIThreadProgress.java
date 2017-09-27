@@ -6,17 +6,22 @@
 package daniel.gui;
 
 import java.math.BigInteger;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingWorker;
 
 /**
  *
  * @author kubuntu
  */
-public class FibonacciGUIthread extends javax.swing.JFrame {
+public class FibonacciGUIThreadProgress extends javax.swing.JFrame {
 
     /**
      * Creates new form FakultaetGUI
      */
-    public FibonacciGUIthread() {
+    public FibonacciGUIThreadProgress() {
         initComponents();
     }
 
@@ -32,6 +37,7 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
         eingabeField = new javax.swing.JTextField();
         ausgabeField = new javax.swing.JTextField();
         startButton = new javax.swing.JButton();
+        progressField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,10 +54,12 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(eingabeField)
-                    .addComponent(ausgabeField)
-                    .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(eingabeField)
+                        .addComponent(ausgabeField)
+                        .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
+                    .addComponent(progressField, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -63,7 +71,9 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
                 .addComponent(ausgabeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startButton)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         pack();
@@ -74,21 +84,46 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         int eingabe = Integer.parseInt(eingabeField.getText());
         
-        SwingWorker<BigInteger, Void> sw = new SwingWorker<BigInteger, Void>() {
-        BigInteger ausgabe = fibonacci(eingabe);
+        SwingWorker<BigInteger, Integer> sw = new SwingWorker<BigInteger, Integer>() {
+            @Override
+            protected BigInteger doInBackground() throws Exception {
+                BigInteger ausgabe = fibonacci(eingabe);
+                
+                return ausgabe;                
+            }
+
+            public BigInteger fibonacci(int n) {
+                if (n <= 1) {
+                    return BigInteger.ONE;
+                }
+                BigInteger f1 = fibonacci(n - 1);
+                BigInteger f2 = fibonacci(n - 2);
+
+                publish(n);
+                return f1.add(f2);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    BigInteger ausgabe = get();
+                    ausgabeField.setText(ausgabe + "");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ExecutionException ex) {
+                    Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            protected void process(List<Integer> chunks) {
+                int last = chunks.get(chunks.size() - 1);
+                progressField.setText(last + "");
+            }
         };
         
-        
-        
-        ausgabeField.setText(ausgabe + "");
+        sw.execute();
     }//GEN-LAST:event_startButtonActionPerformed
-
-    public static BigInteger fibonacci(int n) {
-        if (n <= 1) {
-            return BigInteger.ONE;
-        }
-        return fibonacci(n - 1).add(fibonacci(n - 2));
-    }
     
     /**
      * @param args the command line arguments
@@ -107,14 +142,18 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FibonacciGUIthread.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FibonacciGUIthread.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FibonacciGUIthread.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FibonacciGUIthread.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUIThreadProgress.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -123,7 +162,7 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FibonacciGUIthread().setVisible(true);
+                new FibonacciGUIThreadProgress().setVisible(true);
             }
         });
     }
@@ -131,6 +170,7 @@ public class FibonacciGUIthread extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ausgabeField;
     private javax.swing.JTextField eingabeField;
+    private javax.swing.JTextField progressField;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }
