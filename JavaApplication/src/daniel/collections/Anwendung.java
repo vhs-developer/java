@@ -1,8 +1,11 @@
 package daniel.collections;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 public class Anwendung {
     public static void main(String[] args) {
@@ -72,7 +75,26 @@ public class Anwendung {
         person.partei = "1";
         personen.add(person);           
         
-        // Wie viele Personen können C?
+        // Wie viele Personen können C? Erwartete Ausgabe: 7
+        long kannC = personen.stream().filter(p -> Arrays.asList(p.programmiersprachen).contains("C")).count();
+        System.out.println(kannC);
+
+        // Wie viele Personen kommen aus Paderborn?
+        long anzahl = personen.stream().filter(p -> p.wohnort.equals("Paderborn")).count();
+        System.out.println(anzahl);
+        
+        // Welche Personen kommen aus Paderborn?
+        List<Person> paderborner = personen.stream().filter(p -> p.wohnort.equals("Paderborn")).collect(Collectors.toList());
+        paderborner.forEach(p -> {System.out.println(p);});
+
+        // Durchschnittsalter aller Paderborner:
+        OptionalDouble d = personen.stream().filter(p -> p.wohnort.equals("Paderborn")).mapToInt(p -> p.getAlter()).average();
+        System.out.println(d.orElse(0));
+        
+        // Alternative zu vorhergehender Anweisung:
+        // for (Person p : paderborner) {
+        //    System.out.println(p);
+        // }
         
     }
 }
