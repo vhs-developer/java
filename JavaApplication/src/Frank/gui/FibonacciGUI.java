@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package daniel.gui;
+package Frank;
 
 import java.math.BigInteger;
 
@@ -11,12 +11,12 @@ import java.math.BigInteger;
  *
  * @author kubuntu
  */
-public class FakultaetGUI extends javax.swing.JFrame {
+public class FibonacciGUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form FakultaetGUI
+     * Creates new form FibonacciGUI
      */
-    public FakultaetGUI() {
+    public FibonacciGUI() {
         initComponents();
     }
 
