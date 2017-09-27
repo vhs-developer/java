@@ -43,7 +43,7 @@ public class Filtern {
     public static void main(String[] args) {
         List<Integer> messwerte = Arrays.asList(new Integer[] {3, -7, 42, -11, 0, 5});
         List<Integer> gefiltert = Filtern.filtern(messwerte, new CheckerPositiv());
-//      gefiltert = Filtern.filtern(messwerte, x -> x % 2 == 0);
+        gefiltert = Filtern.filtern(messwerte, x -> x % 2 == 0);
 
         System.out.print(gefiltert);
     }
