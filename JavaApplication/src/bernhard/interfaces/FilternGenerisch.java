@@ -15,25 +15,25 @@ import java.util.List;
 //    // wie die Klassenmethode zu implementieren ist
 //}
 
-interface CheckerG<T> {             // durch das <T> kann der Benutzer einen Datentyp mitgeben
+interface Checker {             
 // interface ist wie "abstrakte Klasse (Oberklasse)
 // im Interface stehen schon die Methoden die in den Unterklassen
 // implementiert werden müssen
 // in der abstrakten Klasse kann man mischen also auch schon Methoden implementieren
-    public boolean test(T element);  
+    public boolean test(Integer element);  
 } 
 
 /**
  * Unterklasse (extends)
  * @author bernhard
  */
-class CheckerPositivG implements CheckerG<Integer>{    // dieses ist jetzt eine CheckerPositivG implemenmtierung für Integer Typen
+class CheckerPositiv implements Checker{
     public boolean test(Integer element){
         return element > 0;
     }
 }
 
-class CheckerGeradeG implements CheckerG<Integer>{
+class CheckerGerade implements Checker{
     public boolean test(Integer element){
         return element % 2 == 0;
     }
@@ -44,10 +44,10 @@ class CheckerGeradeG implements CheckerG<Integer>{
  */
 public class FilternGenerisch {
     
-    public static <T> List<T> filtern (List<T> liste, CheckerG<T> checker) {
-        List<T> ergebnis = new ArrayList<>();
-        for (T element : liste) {
-            if (checker.test(element)) {
+    public static List<Integer> filtern (List<Integer> liste, Checker checker) {
+        List<Integer> ergebnis = new ArrayList<>();
+        for (Integer element : liste) {
+            if (element > 0) {
                 ergebnis.add(element);
             }
         }
@@ -56,7 +56,7 @@ public class FilternGenerisch {
     
     public static void main(String[] args) {
         List<Integer> messwerte = Arrays.asList(new Integer[] {3, -7, 42, -11, 0, 5});
-        List<Integer> gefiltert = FilternGenerisch.filtern(messwerte, new CheckerPositivG());
+        List<Integer> gefiltert = FilternGenerisch.filtern(messwerte, new CheckerPositiv());
         
         System.out.print(gefiltert);
     }
