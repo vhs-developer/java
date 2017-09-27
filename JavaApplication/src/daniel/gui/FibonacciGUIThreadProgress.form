@@ -23,12 +23,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="eingabeField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="ausgabeField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="startButton" alignment="0" pref="759" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="eingabeField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="ausgabeField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="startButton" alignment="0" pref="759" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="progressField" min="-2" pref="402" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
@@ -43,7 +46,9 @@
               <Component id="ausgabeField" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="startButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="105" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="progressField" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="80" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,6 +65,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="progressField">
     </Component>
   </SubComponents>
 </Form>

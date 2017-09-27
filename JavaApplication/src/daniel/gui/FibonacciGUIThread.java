@@ -82,7 +82,7 @@ public class FibonacciGUIThread extends javax.swing.JFrame {
             @Override
             protected BigInteger doInBackground() throws Exception {
                 BigInteger ausgabe = fibonacci(eingabe);
-                return ausgabe;                
+               return ausgabe;                
             }
 
             @Override

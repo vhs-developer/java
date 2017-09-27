@@ -9,6 +9,10 @@ class Person {
     Date geburtsdatum;
     String wohnort;
     String partei;
+    
+    public Integer getAlter() {
+        return new Date().getYear() - geburtsdatum.getYear();
+    }
 }
 
 /**
