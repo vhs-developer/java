@@ -11,12 +11,12 @@ import java.math.BigInteger;
  *
  * @author kubuntu
  */
-public class FakultaetGUI extends javax.swing.JFrame {
+public class FibonacciGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form FakultaetGUI
      */
-    public FakultaetGUI() {
+    public FibonacciGUI() {
         initComponents();
     }
 
@@ -101,20 +101,21 @@ public class FakultaetGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FakultaetGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FakultaetGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FakultaetGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FakultaetGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FibonacciGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FakultaetGUI().setVisible(true);
+                new FibonacciGUI().setVisible(true);
             }
         });
     }
