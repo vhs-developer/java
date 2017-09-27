@@ -2,6 +2,7 @@ package daniel.generics;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.TreeSet;
 
 class IntegerMerger implements Merger<Integer, Integer> {
     @Override
@@ -153,5 +154,27 @@ class ArrayStack<T> implements Stack<T> {
         altersSumme = personen.reduce(0, (partial, pers) -> (partial + pers.getAlter()));
         System.out.println(altersSumme);
         
+        // Menge aller Programmiersprachen des Teams ermitteln:
+        // Idee: Liste der Programmiersprachen je Person zu einer Menge hinzufügen.
+        // Java bietet einige Implementierungen für Mengen an. Diese implementieren das Interface Set.
+        // Man könnte z.B. die Klasse TreeSet verwenden.
+        
+        TreeSet<String> set = personen.reduce(new TreeSet<>(), (partial, pers) -> {
+            partial.addAll(Arrays.asList(pers.programmiersprachen));
+            return partial;
+        });
+        
+        for (String sprache : set) {
+            System.out.println(sprache);
+        }
+
+        set = personen.reduce(new TreeSet<>(), (partial, pers) -> {
+            partial.add(pers.wohnort);
+            return partial;
+        });
+        
+        for (String wohnort : set) {
+            System.out.println(wohnort);
+        }
     }
 }
