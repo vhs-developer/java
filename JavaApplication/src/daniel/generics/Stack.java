@@ -37,7 +37,7 @@ class ArrayStack<T> implements Stack<T> {
     private T[] elements;
     private int maxSize;
     int size;
-
+    
     public <U> U reduce(U initial, Merger<T, U> merger) {
         U partial = initial;
         for (int i = size() - 1; i >= 0; i--) {

@@ -2,8 +2,10 @@ package daniel.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
@@ -95,6 +97,31 @@ public class Anwendung {
         // for (Person p : paderborner) {
         //    System.out.println(p);
         // }
+        
+        // 1) Liste aller Personen deren Vornamen mit A beginnt
+        List<Person> beginntA = personen.stream().filter(p -> p.vorname.startsWith("A")).collect(Collectors.toList());
+        System.out.println("Beginnen mit A: " + beginntA);
+        
+        // 2) Liste aller Programmiersprachen
+        personen.
+                stream().
+                map(p -> p.programmiersprachen).
+                flatMap(List<String>::stream).   // TODO
+                distinct().
+                collect(Collectors.toList());
+        //System.out.println("Sprachen: " + sprachen);
+        
+        // 3) Wie viele Personen kommen aus Paderborn?
+        long n = personen.stream().filter(p -> p.wohnort.equals("Paderborn")).count();
+        
+        
+        // 4) Stärkste Partei ermitteln
+        Map<String, List<Person>> gruppen = personen.stream().collect(Collectors.groupingBy(p -> p.partei));
+        System.out.println(gruppen);
+
+        // 5) Weiseste Person ermitteln
+        Person weise = personen.stream().max((p1, p2) -> (Integer.compare(p1.getAlter(), p2.getAlter()))).get();
+        System.out.println(weise);
         
     }
 }
