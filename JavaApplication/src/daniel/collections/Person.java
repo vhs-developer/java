@@ -1,9 +1,8 @@
 package daniel.collections;
 
-import daniel.generics.*;
 import java.util.Date;
 
-class Person {
+public class Person {
     String vorname;
     String[] programmiersprachen;
     Date geburtsdatum;

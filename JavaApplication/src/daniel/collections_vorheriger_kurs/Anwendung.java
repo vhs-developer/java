@@ -40,15 +40,15 @@ public class Anwendung {
 		.limit(3)
 		.forEach(v -> System.out.println(v));
 
-		// Vornamen der (höchstens) 3 bestbezahltesten Mitarbeiter aus Bielefeld mit Gehalt mindestens 5000:
+		// Vornamen der (höchstens) 2 bestbezahltesten Mitarbeiter aus Bielefeld mit Gehalt mindestens 5000:
 		mitarbeiterListe.stream()
 		.filter(m -> m.getGehalt() >= 5000 && m.getOrt() == "Bielefeld")
 //		.sorted((m1, m2) -> Double.compare(m1.getGehalt(), m2.getGehalt()))
 //		.sorted(Comparator.comparingDouble(m -> m.getGehalt()))
 //		.sorted(Comparator.comparingDouble(Mitarbeiter::getGehalt))
-		.sorted(Comparator.comparing(Mitarbeiter::getGehalt))
+		.sorted(Comparator.comparing(Mitarbeiter::getGehalt).reversed())
 		.map(m -> m.getVorname())
-		.limit(3)
+		.limit(2)
 		.forEach(v -> System.out.println(v));
 
 		// Aus der nach Vorname sortierten Liste der Mitarbeiter aus Bielefeld mit Gehalt mindestens 5000 die vordersten (maximal) 3 Vornamen ausgeben:
@@ -86,7 +86,17 @@ public class Anwendung {
 		}
 
 		// Median des Gehalts aller Paderborner Mitarbeiter:
-		List<Double> paderbornerMitarbeiter = mitarbeiterListe.stream()
+                List<Double> paderbornerMitarbeiter = 
+                mitarbeiterListe.stream().
+                        filter(p -> p.getOrt().equals("Paderborn")).
+                        mapToDouble(p -> p.getGehalt()).
+                        sorted().
+                        boxed().
+                        collect(Collectors.toList());
+
+                System.out.println(paderbornerMitarbeiter.get(paderbornerMitarbeiter.size() / 2));
+                
+                paderbornerMitarbeiter = mitarbeiterListe.stream()
 		.filter(m -> m.getOrt() == "Paderborn")
 		.map(Mitarbeiter::getGehalt)
 		.sorted()

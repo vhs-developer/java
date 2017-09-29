@@ -5,13 +5,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.OptionalDouble;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Anwendung {
     public static void main(String[] args) {
-        List<Person> personen = new ArrayList<Person>();
+        List<Person> personen = new ArrayList<>();
         
         Person person = new Person();
         person.vorname = "Frank";
@@ -103,25 +105,34 @@ public class Anwendung {
         System.out.println("Beginnen mit A: " + beginntA);
         
         // 2) Liste aller Programmiersprachen
-        personen.
+        List<String> sprachen = personen.
                 stream().
-                map(p -> p.programmiersprachen).
-                flatMap(List<String>::stream).   // TODO
+                map(p -> Arrays.asList(p.programmiersprachen)).
+                flatMap(List<String>::stream).
                 distinct().
+                sorted().
                 collect(Collectors.toList());
-        //System.out.println("Sprachen: " + sprachen);
+        System.out.println("Sprachen: " + sprachen);
         
         // 3) Wie viele Personen kommen aus Paderborn?
         long n = personen.stream().filter(p -> p.wohnort.equals("Paderborn")).count();
         
-        
         // 4) Stärkste Partei ermitteln
-        Map<String, List<Person>> gruppen = personen.stream().collect(Collectors.groupingBy(p -> p.partei));
-        System.out.println(gruppen);
-
+        personen.stream().collect(Collectors.groupingBy(p -> p.partei, TreeMap::new, Collectors.counting())).
+                entrySet().stream().max(Comparator.comparing(Entry::getValue)).
+                ifPresent(entry -> {System.out.println("Stärkste Partei ist " + entry.getKey() + " mit " + entry.getValue() + " Stimmen.");});
+        
         // 5) Weiseste Person ermitteln
         Person weise = personen.stream().max((p1, p2) -> (Integer.compare(p1.getAlter(), p2.getAlter()))).get();
         System.out.println(weise);
-        
+
+        // 6) Programmiersprachen nach Häufigkeit ermitteln
+        personen.
+                stream().
+                map(p -> Arrays.asList(p.programmiersprachen)).
+                flatMap(List<String>::stream).
+                collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting())).
+                entrySet().stream().sorted(Comparator.comparingLong(Entry::getValue)).
+                forEach(System.out::println);
     }
 }
