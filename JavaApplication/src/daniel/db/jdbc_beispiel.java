@@ -34,7 +34,7 @@ public class jdbc_beispiel {
 
         Statement stmt = null;
         // Beispiel 1: SELECT-Abfrage formulieren um Liste der Programmiersprachen ermitteln
-        String query = "SELECT * FROM mydb.programmiersprachen ORDER BY sprache;";
+        String query = "SELECT sprache FROM mydb.programmiersprachen ORDER BY sprache;";
 
         try {
             // Abfrage über die Datenbankverbindung absetzen
@@ -54,23 +54,47 @@ public class jdbc_beispiel {
         }
     }
 
+    public static int getSpracheId(Connection con, String sprache) throws SQLException {
+        Statement stmt = null;
+        String query = "SELECT id FROM mydb.programmiersprachen WHERE sprache=?;";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, sprache);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getInt("id");
+    }
+
     // Beispieldaten in die Datenbank einfügen:
     // INSERT-Statement
     public void personenEinfuegen(Connection con) {
         try {
             String einfuegenString = "INSERT INTO `mydb`.`personen` (`vorname`, `geburtsdatum`, `wohnort`, `partei`) VALUES (?, ?, ?, ?);";
+            String sprachenEinfuegenString = "INSERT INTO `mydb`.`personen_programmiersprachen` (`programmiersprachen_id`, `personen_id`) VALUES (?, ?);";
             con.setAutoCommit(false);
             
-            PreparedStatement ps = con.prepareStatement(einfuegenString);
+            PreparedStatement ps = con.prepareStatement(einfuegenString, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement psSprachen = con.prepareStatement(sprachenEinfuegenString);
 
-            // Platzhalter ? binden:
-            ps.setString(1, "Gabi");
-            ps.setDate(2, new Date(2017, 9, 28));
-            ps.setString(3, "Bielefeld");
-            ps.setString(4, "1");
-            
-            // PreparedStatement ausführen: (INSERT)
-            ps.executeUpdate();
+            List<Person> personen = beispielDatenErzeugen();
+            for (Person person : personen) {
+                // Platzhalter ? binden:
+                ps.setString(1, person.vorname);
+                ps.setDate(2, person.geburtsdatum);
+                ps.setString(3, person.wohnort);
+                ps.setString(4, person.partei);
+                
+                // PreparedStatement ausführen: (INSERT)
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                long id = rs.getLong(1);
+                
+                for (String sprache : person.programmiersprachen) {
+                    psSprachen.setInt(1, getSpracheId(con, sprache));
+                    psSprachen.setLong(2, id);
+                    psSprachen.executeUpdate();
+                }
+            }
             
             // Anweisung bestätigen:
             con.commit();
